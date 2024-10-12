@@ -15,12 +15,16 @@ namespace Praktika
                 builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
-            
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
             app.MapControllerRoute(
                 
                 name:"default",
                 pattern:"{controller=Home}/{action=Index}/{Id?}"
                 );
+
+            
 
             app.Run();
         }

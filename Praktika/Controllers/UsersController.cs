@@ -27,9 +27,9 @@ namespace Praktika.Controllers
         }
 
         [HttpGet]
-        [Route("/Get/{Id:Guid}")]
+        [Route("/Get/{id:Guid}")]
         [ActionName("GetUserById")]
-        public async Task<IActionResult> GetUser([FromRoute]Guid id) 
+        public async Task<IActionResult> GetUserById([FromRoute]Guid id) 
         {
             var user = await context.Users.FindAsync(id);
             if (user == null) { return BadRequest("Пользователь не найден"); }
@@ -39,7 +39,7 @@ namespace Praktika.Controllers
 
         [HttpPost]
         [Route("/Add")]
-        public async Task<IActionResult> AddUser(UserEntity user)
+        public async Task<IActionResult> AddUser([FromBody]UserEntity user)
         {
             if (user == null || user.Email==null || user.Password==null || user.Name==null)
             {
@@ -48,7 +48,7 @@ namespace Praktika.Controllers
             else if(user.Name.Length>MAX_USERNAME_LEN){
                 return BadRequest($"Имя пользователя не должно превышать {MAX_USERNAME_LEN}"); 
             }
-
+            user.Id = Guid.NewGuid();
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
