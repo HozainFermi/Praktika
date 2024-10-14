@@ -7,7 +7,7 @@ using Praktika.Models.Entitys;
 
 namespace Praktika.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace Praktika.Controllers
         }
 
         [HttpGet]
-        [Route("/GetAll")]
+        [Route("/GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await context.Users.ToListAsync());
@@ -27,7 +27,7 @@ namespace Praktika.Controllers
         }
 
         [HttpGet]
-        [Route("/Get/{id:Guid}")]
+        [Route("/GetUser/{id:Guid}")]
         [ActionName("GetUserById")]
         public async Task<IActionResult> GetUserById([FromRoute]Guid id) 
         {
@@ -38,7 +38,7 @@ namespace Praktika.Controllers
 
 
         [HttpPost]
-        [Route("/Add")]
+        [Route("/AddUser")]
         public async Task<IActionResult> AddUser([FromBody]UserEntity user)
         {
             if (user == null || user.Email==null || user.Password==null || user.Name==null)
@@ -57,7 +57,7 @@ namespace Praktika.Controllers
 
 
         [HttpPut]
-        [Route("/Put")]
+        [Route("/PutUser")]
         public async Task<IActionResult> PutUser(UserEntity user)
         {
             var olduser = await context.Users.FindAsync(user.Id);
@@ -76,7 +76,7 @@ namespace Praktika.Controllers
         }
 
         [HttpDelete]
-        [Route("/Delete/{Id:Guid}")]
+        [Route("/DeleteUser/{Id:Guid}")]
         public async Task< IActionResult> DeleteUser([FromRoute]Guid Id) 
         {
             var user = await context.Users.FindAsync(Id);

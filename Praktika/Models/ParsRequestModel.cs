@@ -5,12 +5,11 @@ namespace Praktika.Models
 {
     public class ParsRequestModel
     {
-        [Required]
+        
         public Uri SiteUrl { get; set; }
         public List<string>? Selectors { get; set; }
         public string SelectorsType { get; set; }
 
-
-
+        public List<string>? Data { get; set; }
     }
 }

@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Praktika.Contracts;
 using Praktika.Db;
+using Praktika.Models;
 using Praktika.Models.Entitys;
 using Praktika.Services;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace Praktika.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -22,14 +24,14 @@ namespace Praktika.Controllers
         }
 
         [HttpGet]
-        [Route("/GetAll")]
+        [Route("/GetAllTasks")]
         public async Task<IActionResult> GetAllTasks()
         {
             return Ok(await db.Tasks.ToListAsync());
         }
 
         [HttpGet]
-        [Route("/Get/{Id}")]
+        [Route("/GetTask/{Id}")]
         public async Task<IActionResult> GetTaskById([FromRoute]int Id)
         {
             var task = await db.Tasks.FindAsync(Id);
@@ -42,7 +44,7 @@ namespace Praktika.Controllers
 
 
         [HttpPost]
-        [Route("/Add")]
+        [Route("/AddTask")]
         public async Task<IActionResult> PostNewTask([FromBody]TasksEntity task)
         {
 
@@ -55,7 +57,7 @@ namespace Praktika.Controllers
         }
 
         [HttpPut]
-        [Route("/Change/{id:Guid}")]
+        [Route("/ChangeTask/{id:Guid}")]
         public async Task<IActionResult> UpdateTask([FromRoute] Guid id, [FromBody] TasksEntity Updatetask)
         {
             var existingTask = await db.Tasks.FindAsync(id);
@@ -75,6 +77,17 @@ namespace Praktika.Controllers
 
 
         }
+
+        [HttpPut]
+        [Route("/ParsTask")]
+         public IActionResult ParsRequest([FromBody]ParsRequestModel request )
+        {
+
+            List<string> response = parseService.Parse(request.SiteUrl, request.Selectors, request.SelectorsType);
+
+            return Ok(response);
+        }
+
 
     }
 }

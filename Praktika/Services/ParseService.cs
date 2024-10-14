@@ -8,13 +8,15 @@ namespace Praktika.Services
 {
     public class ParseService : IParseService
     {
-        public List<string> Parse(string url, List<string> selectors,string selectorsType, out int numoflines)
+        public List<string> Parse(Uri url, List<string> selectors,string selectorsType)
         {
-            numoflines = 0;
+            //numoflines = 0;
             List<string> result = new List<string>();
             HtmlDocument document;
+
             StringBuilder strbuilder = new StringBuilder();
-            
+
+            //int counter = 0;
 
             List<HtmlNodeCollection> collections = new List<HtmlNodeCollection>();
             List<List<HtmlNode>> csscollection = new List<List<HtmlNode>>();
@@ -42,20 +44,21 @@ namespace Praktika.Services
                         if (elements == null)
                         {
                             result.Add("Элементов с таким селектором не найдено");
-                            return result;
+                            //return result;
                         }
                     }
-
+                    
                     for (int i = 0; i < collections[0].Count; i++)
                     {
                         for (int j = 0; j < collections.Count; j++)
                         {
+                            //counter = j;
                             HtmlNode? node=null;
                             try
                             {
                                  node = collections[j][i];
                             }
-                            catch (IndexOutOfRangeException ex) { strbuilder.Append("Null").Append(" , "); }
+                            catch (IndexOutOfRangeException ex) { break;/*strbuilder.Append("Null").Append(" , ");*/ }
 
                             string contentofnode = HtmlEntity.DeEntitize(node.InnerText);
 
@@ -69,8 +72,9 @@ namespace Praktika.Services
                                 strbuilder.Append(contentofnode).Append(" , ");
                             }
                         }
-                        strbuilder.AppendLine();
+                        //strbuilder.AppendLine();
                         result.Add(strbuilder.ToString());
+                        strbuilder.Clear();
                     }
                     return result;
                     break;

@@ -1,8 +1,12 @@
-﻿namespace Praktika.Contracts
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace Praktika.Contracts
 {
     public interface IParseService
     {
-        public List<string> Parse(string ursl, List<string> selectors,string selectorsType , out int numoflines);
+        public List<string> Parse(Uri ursl, List<string> selectors, string selectorsType);
+        
+        
 
     }
 }

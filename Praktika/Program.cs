@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Praktika.Contracts;
 using Praktika.Db;
+using Praktika.Services;
+
 
 namespace Praktika
 {
@@ -9,23 +12,26 @@ namespace Praktika
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddScoped<IParseService, ParseService>();
             builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<ApiDbContext>(options=>options.UseNpgsql(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
-            app.UseSwagger();
-            app.UseSwaggerUI();
 
-            app.MapControllerRoute(
-                
-                name:"default",
-                pattern:"{controller=Home}/{action=Index}/{Id?}"
-                );
-
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+           
+            app.MapControllers();
             
 
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.Run();
         }
     }
