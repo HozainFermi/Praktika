@@ -3,6 +3,8 @@ using HtmlAgilityPack;
 using System;
 using System.Reflection.Metadata;
 using System.Text;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
 
 namespace Praktika.Services
 {
@@ -12,7 +14,7 @@ namespace Praktika.Services
         {
             //numoflines = 0;
             List<string> result = new List<string>();
-            HtmlDocument document;
+            HtmlDocument document=new HtmlDocument();
 
             StringBuilder strbuilder = new StringBuilder();
 
@@ -21,10 +23,31 @@ namespace Praktika.Services
             List<HtmlNodeCollection> collections = new List<HtmlNodeCollection>();
             List<List<HtmlNode>> csscollection = new List<List<HtmlNode>>();
 
+
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--window-size=1920,1080");
+
+
             var web = new HtmlWeb();
             try
             {
-                document = web.Load(url);
+                // Создаем экземпляр браузера Selenium
+                var driver = new ChromeDriver(options);
+
+                // Загружаем страницу
+                driver.Navigate().GoToUrl(url);
+
+                // Ждем, пока страница полностью загрузится
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(3);
+                
+
+                // Получаем HTML-код страницы
+                string html = driver.PageSource;
+                document.LoadHtml(html);  //web.Load(url);
+                driver.Quit();
             }
             catch (HtmlWebException ex) {
                 result.Add(ex.Message);
@@ -127,14 +150,15 @@ namespace Praktika.Services
 
             }
             return result;
-
-            
-
             
 
 
 
-            
+
+
+
+
+
         }
     }
 }

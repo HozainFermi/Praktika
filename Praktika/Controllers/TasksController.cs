@@ -78,7 +78,7 @@ namespace Praktika.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("/ParsTask")]
          public IActionResult ParsRequest([FromBody]ParsRequestModel request )
         {
@@ -88,6 +88,15 @@ namespace Praktika.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("/ExportCsv")]
+        public async Task<IActionResult> ExportRequest(List<string> data)
+        {
+
+
+
+            return Ok(data);
+        }
 
     }
 }

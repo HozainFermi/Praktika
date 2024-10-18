@@ -7,9 +7,9 @@ namespace Praktika.Models
     {
         
         public Uri SiteUrl { get; set; }
-        public List<string>? Selectors { get; set; }
+        public List<string> Selectors { get; set; }
         public string SelectorsType { get; set; }
 
-        public List<string>? Data { get; set; }
+       // public List<string>? Data { get; set; }
     }
 }
