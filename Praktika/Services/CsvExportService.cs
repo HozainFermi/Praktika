@@ -12,7 +12,7 @@ namespace Praktika.Services
 
             using (var stream = new MemoryStream()) 
             {
-            
+                
             
             }
             throw new NotImplementedException();

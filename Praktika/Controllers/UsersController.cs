@@ -64,12 +64,12 @@ namespace Praktika.Controllers
             if (olduser == null) { return BadRequest("Пользователь не найден"); }
             else
             {
-                UserEntity newuser = new UserEntity();
 
-                newuser.Email = user.Email;
-                newuser.Password = user.Password;
-                newuser.Name = user.Name;
-                await context.Users.AddAsync(newuser);
+
+                olduser.Email = user.Email;
+                olduser.Password = user.Password;
+                olduser.Name = user.Name;
+               
                 await context.SaveChangesAsync();
                 return Ok(user);
             }
