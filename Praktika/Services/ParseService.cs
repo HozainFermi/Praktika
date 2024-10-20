@@ -41,7 +41,7 @@ namespace Praktika.Services
                 driver.Navigate().GoToUrl(url);
 
                 // Ждем, пока страница полностью загрузится
-                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(3);
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(2);
                 
 
                 // Получаем HTML-код страницы
@@ -87,12 +87,12 @@ namespace Praktika.Services
 
                             if (contentofnode == String.Empty)
                             {
-                                strbuilder.Append("Нет InnerText'а").Append(" , ");
+                                strbuilder.Append("Нет InnerText'а").Append(", ");
                                 //return result;
                             }
                             else
                             {
-                                strbuilder.Append(contentofnode).Append(" , ");
+                                strbuilder.Append(contentofnode).Append(", ");
                             }
                         }
                         //strbuilder.AppendLine();
@@ -124,18 +124,18 @@ namespace Praktika.Services
                             {
                                 node = collections[j][i];
                             }
-                            catch (IndexOutOfRangeException ex) { strbuilder.Append("Null").Append(" , "); }
+                            catch (IndexOutOfRangeException ex) { strbuilder.Append("Null").Append(", "); }
 
                             string contentofnode = HtmlEntity.DeEntitize(node.InnerText);
 
                             if (contentofnode == String.Empty  )//Условие поменять два раза возможно будет добавляться строка для одного и того же нода
                             {
-                                strbuilder.Append("Нет InnerText'а").Append(" , ");
+                                strbuilder.Append("Нет InnerText'а").Append(", ");
                                 //return result;
                             }
                             else
                             {
-                                strbuilder.Append(contentofnode).Append(" , ");
+                                strbuilder.Append(contentofnode).Append(", ");
                             }
                         }
                         //strbuilder.AppendLine();

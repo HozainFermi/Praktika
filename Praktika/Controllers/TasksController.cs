@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Praktika.Contracts;
 using Praktika.Db;
+using Praktika.Interfaces;
 using Praktika.Models;
 using Praktika.Models.Entitys;
 using Praktika.Services;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
@@ -17,10 +20,12 @@ namespace Praktika.Controllers
     {
         private ApiDbContext db;
         private IParseService parseService;
-        public TasksController(ApiDbContext _context, IParseService parseservice)
+        private IExportService exportService;
+        public TasksController(ApiDbContext _context, IParseService parseservice, IExportService exportService)
         {
             db= _context;
             this.parseService= parseservice;
+            this.exportService= exportService;
         }
 
         [HttpGet]
@@ -90,12 +95,12 @@ namespace Praktika.Controllers
 
         [HttpPost]
         [Route("/ExportCsv")]
-        public async Task<IActionResult> ExportRequest(List<string> data)
+        public async Task<IActionResult> ExportRequest(ExportRequestModel data)
         {
+            var file = await exportService.ExportTableData(data);
 
 
-
-            return Ok(data);
+            return File(file, "text/csv", "output.csv");
         }
 
     }

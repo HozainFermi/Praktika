@@ -6,10 +6,6 @@ namespace Praktika.Models
     {
 
 
-        public CreateParsingTaskRequest()
-        {
-            
-        }
 
         public int Id { get; set; }
         

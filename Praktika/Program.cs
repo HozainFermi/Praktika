@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Praktika.Contracts;
 using Praktika.Db;
+using Praktika.Interfaces;
 using Praktika.Services;
 
 
@@ -13,6 +14,7 @@ namespace Praktika
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddScoped<IParseService, ParseService>();
+            builder.Services.AddScoped<IExportService, CsvExportService>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -1,7 +1,9 @@
-﻿namespace Praktika.Interfaces
+﻿using Praktika.Models;
+
+namespace Praktika.Interfaces
 {
     public interface IExportService
     {
-        public Task<Stream> ExportTableData();
+        public Task<byte[]> ExportTableData(ExportRequestModel req);
     }
 }
