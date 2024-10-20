@@ -18,6 +18,7 @@ namespace Praktika.Services
            // byte[] filesContent;
             using (MemoryStream memoryStream = new MemoryStream())
             {
+
                 using (StreamWriter streamWriter = new StreamWriter(memoryStream, Encoding.UTF8))
                 {
                     // Write CSV data to the stream
@@ -31,6 +32,10 @@ namespace Praktika.Services
 
                 return csvData;
                
+
+                
+            
+
             }
         }
     }
